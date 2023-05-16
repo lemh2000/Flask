@@ -1,0 +1,21 @@
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+<div class="container my-3">
+    <form method="post">
+        <div class="form-group"><br>
+            <label for="username">사용자 이름</label>
+            <input type="text" class="form-control" name="username" id="username"
+                   value="", autofocus required>
+        </div>
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" class="form-control" name="password" id="password"
+                   value="", required>
+        </div>
+        <button type="submit" class="btn btn-primary">생성하기</button><br><br>
+        <a class="btn btn-primary" href="{{url_for('main')}}">홈으로</a>
+    </form>
+</div>

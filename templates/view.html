@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <table class="table table-striped text-center" border="1" width ="500" height="300" textalign = "center" >
+        {% autoescape false %}  <!-- 자동 이스케이프 비활성화 -->
+        
+        <tr align ="center" height="20">
+            <th width="50">작성자</th>
+            <th>{{ writer }}</th>
+        </tr>
+        <tr align ="center">
+            <td height="20">제목</td>
+            <td>{{ title }}</td>
+        </tr>
+        <tr align ="center">
+            <td>내용</td>
+            <td>{{ content }}</td>
+        </tr>
+        {% endautoescape %}
+    </table>
+    <a class="btn btn-primary" href="/">목록</a>
+</body>
+</html>

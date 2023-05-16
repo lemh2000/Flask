@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    {% if username %}  Logged in as {{ username }}{% endif %}
+    <div class="container">
+        <br>
+        <div style="text-align:center">
+            {% if username %}<a type="button" class='btn btn-primary' href="/logout">로그아웃</a>
+            {% else %}<a type="button" class='btn btn-primary' href="/login">로그인</a>
+            {% endif %}<a type="button" class='btn btn-primary' href="/register">회원가입</a>
+        </div>
+        <br>
+        <table class="table table-striped text-center" style="border: 1px solid">
+            <thead>
+                <tr align="center">
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in data_list %}
+                <tr>
+                    <td>{{ i[0] }}</td>
+                    <td><a href="{{url_for('view', num=i[0])}}">{{ i[1] }}</a></td>
+                    <td>{{ i[2] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <br><br>
+        <div style="text-align:center">
+            {% if username %}<a type="button" class='btn btn-primary' href="/write">글작성</a>{% endif %}
+        </div>
+    </div>
+</body>
+</html>
