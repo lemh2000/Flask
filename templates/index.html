@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <style>
+        table{
+            margin:auto;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    {% if username %}  Logged in as {{ username }}{% endif %}
+    {% if username %} <br><div style="text-align: center; font-size: large"> Logged in as {{ username }}</div>{% endif %}
+    
     <div class="container">
         <br>
         <div style="text-align:center">
@@ -15,15 +23,17 @@
             {% endif %}<a type="button" class='btn btn-primary' href="/register">회원가입</a>
         </div>
         <br>
-        <table class="table table-striped text-center" style="border: 1px solid">
-            <thead>
-                <tr align="center">
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>작성자</th>
+        
+        <table class="table table-striped" style="border: 1px solid">
+            <thead>        
+                <tr style="border-bottom: 1px solid;">
+                    <td width="50">번호</td>
+                    <td>제목</td>
+                    <td width="100">작성자</td>
                 </tr>
+                
             </thead>
-            <tbody>
+            <tbody >
                 {% for i in data_list %}
                 <tr>
                     <td>{{ i[0] }}</td>
@@ -33,7 +43,7 @@
                 {% endfor %}
             </tbody>
         </table>
-    <br><br>
+    <br>
         <div style="text-align:center">
             {% if username %}<a type="button" class='btn btn-primary' href="/write">글작성</a>{% endif %}
         </div>
