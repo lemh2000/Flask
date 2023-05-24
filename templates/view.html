@@ -10,6 +10,7 @@
     <div class="container my-3">
         <h3>글 보기</h3>
         <table class="table table-bordered">
+            {% autoescape false %}
             <tr class="active">
                 <td>제목</td><td>작성자</td>
             </tr>
@@ -24,6 +25,7 @@
                 <td colspan="3">{{ content }}</td>
             </tr>
             </tbody>
+            {% endautoescape %}
         </table>
         
         <a class="btn btn-primary" href="/">목록</a>
