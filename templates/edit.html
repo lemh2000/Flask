@@ -11,8 +11,9 @@
     <br>
     <div class="container">
         <section>
-            <form class="form-horizontal" method="post" action="/write_action">
+            <form class="form-horizontal" method="post" action="/edit/{{ data[0] }}">
                 <fieldset>
+                    <input type="hidden" name="num" value={{ data[0] }}>
                     <div class="form-group">
                         <label class="col-md-12" for="txtTitle">제목</label>
                         <div class="col-md-12">

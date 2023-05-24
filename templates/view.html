@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <meta charset="UTF-8">
-    <title></title>
 </head>
 <body>
-    <table class="table table-striped text-center" border="1" width ="500" height="300" textalign = "center" >
-        {% autoescape false %}  <!-- 자동 이스케이프 비활성화 -->
+    <div class="container my-3">
+        <h3>글 보기</h3>
+        <table class="table table-bordered">
+            <tr class="active">
+                <td>제목</td><td>작성자</td>
+            </tr>
+            <tbody>
+            <tr>
+                <td>{{ title }}</td><td>{{ writer }}</td>
+            </tr>
+            <tr>
+                <td class="active" colspan="3">내용</td>
+            </tr>
+            <tr>
+                <td colspan="3">{{ content }}</td>
+            </tr>
+            </tbody>
+        </table>
         
-        <tr align ="center" height="20">
-            <th width="50">작성자</th>
-            <th>{{ writer }}</th>
-        </tr>
-        <tr align ="center">
-            <td height="20">제목</td>
-            <td>{{ title }}</td>
-        </tr>
-        <tr align ="center">
-            <td>내용</td>
-            <td>{{ content }}</td>
-        </tr>
-        {% endautoescape %}
-    </table>
-    <a class="btn btn-primary" href="/">목록</a>
+        <a class="btn btn-primary" href="/">목록</a>
+        {% if session['username'] == writer or session['username'] == 'admin' %}
+        <a type="button" class='btn btn-primary' href="{{url_for('edit', num=num)}}">수정</a>
+        <a type="button" class='btn btn-primary' href="{{url_for('delete', num=num)}}">삭제</a>
+        {% endif %}
 </body>
 </html>

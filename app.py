@@ -1,11 +1,12 @@
-from flask import Flask, render_template, request, redirect, session, url_for, make_response
+from flask import Flask, render_template, request, redirect, session, url_for
 import pymysql
+from pymysql.constants import CLIENT
 
 app = Flask(__name__)
 
 app.secret_key = "asdfasdfasdf"
 
-db = pymysql.connect(host="localhost", user="root", passwd="1234", db="server", charset="utf8")
+db = pymysql.connect(host="localhost", user="root", passwd="1234", db="server", charset="utf8", client_flag=CLIENT.MULTI_STATEMENTS)
 
 cur = db.cursor()
 
@@ -64,7 +65,6 @@ def login():
 
         if rows_count > 0:
             user_info = cur.fetchone()
-            print(user_info)
             is_pw_correct = password == user_info[1]
             if is_pw_correct:
                 session['username'] = username
@@ -120,8 +120,62 @@ def view(num):
     writer = data[2]
     title =  data[1]
     content = data[3]
-    return render_template('view.html', writer=writer, title=title, content=content)
+    return render_template('view.html', writer=writer, title=title, content=content, num=num)
 
+@app.route('/delete/<num>', methods=['GET'])
+def delete(num):
+    if 'username' in session: 
+        sql = "SELECT * FROM board where num = %s"
+        cur.execute(sql, num)
+        data = cur.fetchone()
+        if session['username'] == data[2] or session['username'] == 'admin':
+            print('2')
+            sql = """   
+                delete from board where num = %s;
+                SET @CNT = 0;
+                UPDATE board SET board.num =  @CNT:=@CNT+1;
+                Alter Table board Auto_increment=1;
+            """
+            cur.execute(sql, num)
+            db.commit()
+            return """
+                <script>
+                    alert("글이 삭제 되었습니다")
+                    location.href="/"
+                </script>
+            """
+    return """
+        <script>
+            alert("삭제 권한이 없습니다.")
+            location.href="/"
+        </script>
+    """
 
+@app.route('/edit/<num>', methods=['GET','POST'])
+def edit(num):
+    if request.method == 'POST':
+        edit_info = request.form
+
+        title = edit_info['title']
+        content = edit_info['content']
+        num = edit_info['num']
+        sql = "update board set title = %s, content = %s WHERE num = %s;"
+        cur.execute(sql, (title, content, num))
+        db.commit()
+
+        return redirect(url_for('view', num=num))
+    if 'username' in session:
+        sql = "SELECT * FROM board where num = %s"
+        cur.execute(sql, num)
+        data = cur.fetchone()
+        if session['username'] == data[2] or session['username'] == 'admin':
+            return render_template('edit.html', data=data)
+    return """
+        <script> 
+            alert("수정 권한이 없습니다.")
+            location.href="/"
+        </script>
+        """
+    
 if __name__ == "__main__":
     app.run()
